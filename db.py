@@ -1,12 +1,12 @@
 from os import getenv
-import mysql.connector
-
+#import mysql.connector
+import mariadb
 
 def __open__():
-    connection = mysql.connector.connect(
+    connection = mariadb.connect(
         user="gps",
         password=getenv("DB_PASSWD"),
-        host="localhost",
+        host="192.168.0.65",
         database="gpstracker",
     )
     cursor = connection.cursor(dictionary=True)

@@ -1,0 +1,7 @@
+certifi
+charset-normalizer
+idna
+mariadb
+python-dotenv
+requests
+urllib3

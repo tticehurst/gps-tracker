@@ -25,13 +25,21 @@ for file in files:
         doesExist = query("SELECT 1 FROM readings WHERE reading_time = %s", [time])
 
         if not doesExist:
+            print(
+                f"https://nominatim.openstreetmap.org/reverse?format=json&lat={lat}&lon={lon}&zoom=18&addressdetails=1"
+            )
+            print(lat, lon)
             responseInfo = request(
                 "GET",
                 f"https://nominatim.openstreetmap.org/reverse?format=json&lat={lat}&lon={lon}&zoom=18&addressdetails=1",
+                headers={
+                    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36 Edg/125.0.0.0",
+                    "referer": "https://nominatim.openstreetmap.org/",
+                },
             ).json()
 
             print(
-                f"Time: {time} | Lon: {lon}, Lat: {lat} | Address: {responseInfo['display_name']}"
+                f"Time: {time} | Lon: {lon}, Lat: {lat} | {responseInfo['display_name']}"
             )
 
             query(
@@ -39,5 +47,5 @@ for file in files:
                 [time, lat, lon, responseInfo["display_name"]],
                 True,
             )
-        else:
-            print(f"Time: {time} | Lon: {lon}, Lat: {lat} | !Already exists!")
+        # else:
+        #     print(f"Time: {time} | Lon: {lon}, Lat: {lat} | !Already exists!")
