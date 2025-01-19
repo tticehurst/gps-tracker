@@ -1,6 +1,8 @@
 from os import getenv
-#import mysql.connector
+
+# import mysql.connector
 import mariadb
+
 
 def __open__():
     connection = mariadb.connect(
@@ -22,10 +24,12 @@ def __close__(connection, cursor):
 def query(query, data=[], insert=False):
     (connection, cursor) = __open__()
     cursor.execute(query, data)
-    data = cursor.fetchall()
+    data = []
 
     if insert:
         connection.commit()
+    else:
+        data = cursor.fetchall()
 
     __close__(connection, cursor)
 
